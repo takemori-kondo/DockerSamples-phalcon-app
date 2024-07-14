@@ -9,6 +9,35 @@ class ZzzSampleController extends ControllerBase
 {
     public function ApiAction(string $param = '', ?string $param2 = null, ?string $param3 = null)
     {
+        if ($param === 'create') {
+            $sql = 'INSERT INTO zzz_sample(zzz_sample_id, zzz_sample_cd, name, kind) VALUES(:zzz_sample_id, :zzz_sample_cd, :name, :kind)';
+            $params = [
+                'zzz_sample_id' => $param2,
+                'zzz_sample_cd' => "code_{$param2}",
+                'name' => $param3 ?? 'no name',
+                'kind' => 'api',
+            ];
+            $affectedRowsCount = PhalconDbUtil::executeBySql($sql, $params);
+            return ResponseUtil::setup200_OK($affectedRowsCount);
+        }
+        if ($param === 'update') {
+            $sql = 'UPDATE zzz_sample SET  zzz_sample_cd=:zzz_sample_cd , name=:name, kind=:kind WHERE zzz_sample_id=:zzz_sample_id';
+            $params = [
+                'zzz_sample_id' => $param2,
+                'zzz_sample_cd' => "code_{$param2}",
+                'name' => $param3 ?? 'no name',
+                'kind' => 'api',
+            ];
+            $affectedRowsCount = PhalconDbUtil::executeBySql($sql, $params);
+            return ResponseUtil::setup200_OK($affectedRowsCount);
+        }
+        if ($param === 'read') {
+            $sql = 'SELECT zzz_sample_id, zzz_sample_cd, name, kind FROM zzz_sample WHERE zzz_sample_id<=:zzz_sample_id';
+            $params = ['zzz_sample_id' => $param2];
+            $rows = PhalconDbUtil::queryBySql($sql, $params);
+            return ResponseUtil::setup200_OK($rows);
+        }
+
         if ($param === '400') {
             return ResponseUtil::setup400_BadRequest(new ErrorDto($param2, $param3), 'this is result');
         }
@@ -127,7 +156,7 @@ class ZzzSampleController extends ControllerBase
         // $zzz_sample->created_by = (int)$this->request->getPost("created_by");
         // $zzz_sample->updated_at = $this->request->getPost("updated_at");
         // $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
-
+        PhalconDbUtil::assignCommonPropertiesForCreate($zzz_sample, 123);
 
         if (!$zzz_sample->create()) {
             foreach ($zzz_sample->getMessages() as $message) {
@@ -180,22 +209,30 @@ class ZzzSampleController extends ControllerBase
             return;
         }
 
-        $zzz_sample->zzz_sample_id = (int)$this->request->getPost("zzz_sample_id");
-        $zzz_sample->zzz_sample_cd = $this->request->getPost("zzz_sample_cd");
-        $zzz_sample->name = $this->request->getPost("name");
-        $zzz_sample->kind = $this->request->getPost("kind");
-        $zzz_sample->lock_version = (int)$this->request->getPost("lock_version");
-        $zzz_sample->created_at = $this->request->getPost("created_at");
-        $zzz_sample->created_by = (int)$this->request->getPost("created_by");
-        $zzz_sample->updated_at = $this->request->getPost("updated_at");
-        $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
+        $common = PhalconDbUtil::getCommonPropertiesPartsForUpdate((int)$this->request->getPost('lock_version'), 456);
+        $setParts = $common->setParts;
+        $whereParts = $common->whereParts;
+        $paramParts = $common->paramParts;
+        $sql = <<<"SQL"
+UPDATE zzz_sample 
+SET
+    zzz_sample_cd = :zzz_sample_cd
+    , name = :name
+    , kind = :kind 
+$setParts
+WHERE
+    zzz_sample_id = :zzz_sample_id
+$whereParts
+SQL;
+        $params = array_merge([
+            'zzz_sample_id' => $zzz_sample_id,
+            'zzz_sample_cd' => $this->request->getPost('zzz_sample_cd'),
+            'name' => $this->request->getPost('name'),
+            'kind' => $this->request->getPost('kind'),
+        ], $paramParts);
+        if (0 === PhalconDbUtil::executeBySql($sql, $params)) {
 
-
-        if (!$zzz_sample->update()) {
-
-            foreach ($zzz_sample->getMessages() as $message) {
-                $this->flash->error($message->getMessage());
-            }
+            $this->flash->error('invalid lock version.');
 
             $this->dispatcher->forward([
                 'controller' => "zzz_sample",

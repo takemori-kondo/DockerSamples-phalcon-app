@@ -30,5 +30,6 @@ return new \Phalcon\Config\Config([
         'baseUri'        => '/',
 
         'utilsDir'       => APP_PATH . '/utils/',
+        'timezone'       => 'Asia/Tokyo'
     ]
 ]);
