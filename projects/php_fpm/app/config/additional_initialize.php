@@ -12,3 +12,4 @@ declare(strict_types=1);
  */
 
 date_default_timezone_set($config->get('application')->get('timezone'));
+LogUtil::initialize($config->get('application')->get('logLevel'));

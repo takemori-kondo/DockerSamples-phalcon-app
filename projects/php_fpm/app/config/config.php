@@ -30,6 +30,7 @@ return new \Phalcon\Config\Config([
         'baseUri'        => '/',
 
         'utilsDir'       => APP_PATH . '/utils/',
-        'timezone'       => 'Asia/Tokyo'
+        'timezone'       => 'Asia/Tokyo',
+        'logLevel'       => 6, // 0-7. 3=Error, 4=Warning, 6=Informational, 7=Debug
     ]
 ]);
