@@ -1,11 +1,9 @@
 <?php
+// PHP8.3
 declare(strict_types=1);
-
- 
 
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model;
-
 
 class ZzzSampleController extends ControllerBase
 {
@@ -125,7 +123,7 @@ class ZzzSampleController extends ControllerBase
         // $zzz_sample->created_by = (int)$this->request->getPost("created_by");
         // $zzz_sample->updated_at = $this->request->getPost("updated_at");
         // $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
-        
+
 
         if (!$zzz_sample->create()) {
             foreach ($zzz_sample->getMessages() as $message) {
@@ -187,7 +185,7 @@ class ZzzSampleController extends ControllerBase
         $zzz_sample->created_by = (int)$this->request->getPost("created_by");
         $zzz_sample->updated_at = $this->request->getPost("updated_at");
         $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
-        
+
 
         if (!$zzz_sample->update()) {
 

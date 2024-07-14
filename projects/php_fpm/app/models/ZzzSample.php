@@ -1,8 +1,9 @@
 <?php
+// PHP8.3
+declare(strict_types=1);
 
 class ZzzSample extends \Phalcon\Mvc\Model
 {
-
     public ?int $zzz_sample_id = null;
     public string $zzz_sample_cd = "";
     public string $name = "";
@@ -43,5 +44,4 @@ class ZzzSample extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
-
 }
