@@ -7,10 +7,14 @@ use Phalcon\Paginator\Adapter\Model;
 
 class ZzzSampleController extends ControllerBase
 {
-    public function ApiAction(string $param = '', ?string $param2 = null, ?string $param3 = null)
+    public function ApiAction()
     {
-        LogUtil::info(__METHOD__ . "|{$param} {$param2} {$param3}");
+        $requestArray = RequestUtil::logAndGetRequestParameters(__METHOD__);
+        $param = $requestArray['param'] ?? null; //   issetや??は言語構造なため、未設定でもWARNINGは出ない
+        $param2 = $requestArray['param2'] ?? null; // issetや??は言語構造なため、未設定でもWARNINGは出ない
+        $param3 = $requestArray['param3'] ?? null; // issetや??は言語構造なため、未設定でもWARNINGは出ない
         LogUtil::debug('this is debug');
+        LogUtil::info('this is info');
         LogUtil::warn('this is warn');
         LogUtil::error('this is error');
         if ($param === 'create') {
