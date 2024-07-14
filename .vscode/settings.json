@@ -11,4 +11,15 @@
     "git.ignoreMissingGitWarning": true,
     "terminal.integrated.fontFamily": "MeiryoKe_Console, monospace",
     "terminal.integrated.defaultProfile.windows": "PowerShell",
+    // phpunit
+    "phpunit.command": "docker exec -t php_fpm /bin/sh -c",
+    "phpunit.php": "php",
+    "phpunit.phpunit": "/var/www/vendor/bin/phpunit",
+    "phpunit.args": [
+        "-c",
+        "/var/www/phpunit.xml"
+    ],
+    "phpunit.paths": {
+        "${workspaceFolder}/projects/php_fpm": "/var/www",
+    },
 }

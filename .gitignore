@@ -11,8 +11,10 @@
 npm-debug.log
 yarn-error.log
 
-# php composer
+# php composer, phpunit
 vendor/
+/.phpunit.cache
+.phpunit.result.cache
 
 # IDEs and editors
 .idea/
