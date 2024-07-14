@@ -18,11 +18,13 @@
 
 <?php echo $this->getContent(); ?>
 
+<?php echo $this->flash->output() ?>
+
 <form action="<?= $this->url->get('zzz_sample/save') ?>" class="form-horizontal" method="post">
     <div class="form-group">
     <label for="fieldZzzSampleId" class="col-sm-2 control-label">Zzz Of Sample</label>
     <div class="col-sm-10">
-        <?= $this->tag->inputText("zzz_sample_id", $zzz_sample->zzz_sample_id, ["size" => 30, "class" => "form-control", "id" => "fieldZzzSampleId"]) ?>
+        <?= $this->tag->inputText("zzz_sample_id", $zzz_sample->zzz_sample_id, ["size" => 30, "class" => "form-control", "id" => "fieldZzzSampleId", "readonly" => true, "style" => " background:gainsboro;"]) ?>
     </div>
 </div>
 
@@ -82,8 +84,7 @@
     </div>
 </div>
 
-
-    <?php echo $this->tag->inputHidden("id", $zzz_sample->zzz_sample_id) ?>
+    <?php echo $this->tag->inputHidden("zzz_sample_id", $zzz_sample->zzz_sample_id) ?>
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

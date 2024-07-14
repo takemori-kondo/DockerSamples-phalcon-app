@@ -18,6 +18,8 @@
 
 <?php echo $this->getContent(); ?>
 
+<?php echo $this->flash->output() ?>
+
 <form action="<?= $this->url->get('zzz_sample/create') ?>" class="form-horizontal" method="post">
     <div class="form-group">
     <label for="fieldZzzSampleId" class="col-sm-2 control-label">Zzz Of Sample</label>
@@ -46,7 +48,7 @@
         <?= $this->tag->inputText("kind", $zzz_sample->kind, ["class" => "form-control", "id" => "fieldKind"]) ?>
     </div>
 </div>
-
+<!--
 <div class="form-group">
     <label for="fieldLockVersion" class="col-sm-2 control-label">Lock Of Version</label>
     <div class="col-sm-10">
@@ -81,7 +83,7 @@
         <?= $this->tag->inputText("updated_by", $zzz_sample->updated_by, ["size" => 30, "class" => "form-control", "id" => "fieldUpdatedBy"]) ?>
     </div>
 </div>
-
+-->
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

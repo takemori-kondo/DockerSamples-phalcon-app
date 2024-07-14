@@ -3,59 +3,15 @@
 class ZzzSample extends \Phalcon\Mvc\Model
 {
 
-    /**
-     *
-     * @var integer
-     */
-    public $zzz_sample_id;
-
-    /**
-     *
-     * @var string
-     */
-    public $zzz_sample_cd;
-
-    /**
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     *
-     * @var string
-     */
-    public $kind;
-
-    /**
-     *
-     * @var integer
-     */
-    public $lock_version;
-
-    /**
-     *
-     * @var string
-     */
-    public $created_at;
-
-    /**
-     *
-     * @var integer
-     */
-    public $created_by;
-
-    /**
-     *
-     * @var string
-     */
-    public $updated_at;
-
-    /**
-     *
-     * @var integer
-     */
-    public $updated_by;
+    public ?int $zzz_sample_id = null;
+    public string $zzz_sample_cd = "";
+    public string $name = "";
+    public string $kind = "";
+    public ?int $lock_version = null;
+    public ?string $created_at = null;
+    public ?int $created_by = null;
+    public ?string $updated_at = null;
+    public ?int $updated_by = null;
 
     /**
      * Initialize method for model.

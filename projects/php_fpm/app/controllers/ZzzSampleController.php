@@ -101,20 +101,20 @@ class ZzzSampleController extends ControllerBase
         }
 
         $zzz_sample = new ZzzSample();
-        $zzz_sample->zzzSampleId = $this->request->getPost("zzz_sample_id");
-        $zzz_sample->zzzSampleCd = $this->request->getPost("zzz_sample_cd");
+        $zzz_sample->zzz_sample_id = (int)$this->request->getPost("zzz_sample_id");
+        $zzz_sample->zzz_sample_cd = $this->request->getPost("zzz_sample_cd");
         $zzz_sample->name = $this->request->getPost("name");
         $zzz_sample->kind = $this->request->getPost("kind");
-        $zzz_sample->lockVersion = $this->request->getPost("lock_version", "int");
-        $zzz_sample->createdAt = $this->request->getPost("created_at");
-        $zzz_sample->createdBy = $this->request->getPost("created_by");
-        $zzz_sample->updatedAt = $this->request->getPost("updated_at");
-        $zzz_sample->updatedBy = $this->request->getPost("updated_by");
+        // $zzz_sample->lock_version = (int)$this->request->getPost("lock_version");
+        // $zzz_sample->created_at = $this->request->getPost("created_at");
+        // $zzz_sample->created_by = (int)$this->request->getPost("created_by");
+        // $zzz_sample->updated_at = $this->request->getPost("updated_at");
+        // $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
         
 
-        if (!$zzz_sample->save()) {
+        if (!$zzz_sample->create()) {
             foreach ($zzz_sample->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error($message->getMessage());
             }
 
             $this->dispatcher->forward([
@@ -163,21 +163,21 @@ class ZzzSampleController extends ControllerBase
             return;
         }
 
-        $zzz_sample->zzzSampleId = $this->request->getPost("zzz_sample_id");
-        $zzz_sample->zzzSampleCd = $this->request->getPost("zzz_sample_cd");
+        $zzz_sample->zzz_sample_id = (int)$this->request->getPost("zzz_sample_id");
+        $zzz_sample->zzz_sample_cd = $this->request->getPost("zzz_sample_cd");
         $zzz_sample->name = $this->request->getPost("name");
         $zzz_sample->kind = $this->request->getPost("kind");
-        $zzz_sample->lockVersion = $this->request->getPost("lock_version", "int");
-        $zzz_sample->createdAt = $this->request->getPost("created_at");
-        $zzz_sample->createdBy = $this->request->getPost("created_by");
-        $zzz_sample->updatedAt = $this->request->getPost("updated_at");
-        $zzz_sample->updatedBy = $this->request->getPost("updated_by");
+        $zzz_sample->lock_version = (int)$this->request->getPost("lock_version");
+        $zzz_sample->created_at = $this->request->getPost("created_at");
+        $zzz_sample->created_by = (int)$this->request->getPost("created_by");
+        $zzz_sample->updated_at = $this->request->getPost("updated_at");
+        $zzz_sample->updated_by = (int)$this->request->getPost("updated_by");
         
 
-        if (!$zzz_sample->save()) {
+        if (!$zzz_sample->update()) {
 
             foreach ($zzz_sample->getMessages() as $message) {
-                $this->flash->error($message);
+                $this->flash->error($message->getMessage());
             }
 
             $this->dispatcher->forward([
