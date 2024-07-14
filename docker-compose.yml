@@ -1,0 +1,52 @@
+# 2023頃からcomposeファイルバージョン指定は非推奨らしい
+# version: "3.8"
+
+services:
+    nginx:
+        container_name: nginx
+        image: nginx
+        ports:
+            - 80:80
+        volumes:
+            - ./docker/nginx/volumes/default.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/nginx/volumes/nginx.conf:/etc/nginx/nginx.conf
+        environment:
+            TZ: Asia/Tokyo
+            SERVER_ENV: local
+        depends_on:
+            - php_fpm
+        networks:
+            bridge1:
+                ipv4_address: 172.16.0.2
+
+    php_fpm:
+        container_name: php_fpm
+        build: ./docker/php_fpm
+        ports:
+            - 9000:9000
+            # xdebug
+            # vscodeにWSL拡張を入れてWSL上のフォルダを開いた場合、ポート設定は不要
+            # - 9003:9003
+        # xdebug
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        volumes:
+            - ./docker/php_fpm/volumes/php-fpm.conf:/etc/php/8.3/fpm/php-fpm.conf
+            - ./docker/php_fpm/volumes/www.conf:/etc/php/8.3/fpm/pool.d/www.conf
+            - ./docker/php_fpm/volumes/20-xdebug.ini:/etc/php/8.3/fpm/conf.d/20-xdebug.ini
+            - ./projects/php_fpm:/scripts
+        environment:
+            TZ: Asia/Tokyo
+            SERVER_ENV: local
+        networks:
+            bridge1:
+                ipv4_address: 172.16.0.10
+
+networks:
+    bridge1:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.0.0/16
+                  gateway: 172.16.0.1
