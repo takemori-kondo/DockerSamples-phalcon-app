@@ -7,7 +7,7 @@
         "request": "launch",
         "port": 9003,
         "pathMappings": {
-          "/scripts/": "${workspaceFolder}/projects/php_fpm"
+          "/var/www/": "${workspaceFolder}/projects/php_fpm"
         }
       }
     ]
