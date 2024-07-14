@@ -7,19 +7,23 @@ use Phalcon\Paginator\Adapter\Model;
 
 class ZzzSampleController extends ControllerBase
 {
-    public function ApiAction()
+    public function ApiAction(string $param = '', ?string $param2 = null, ?string $param3 = null)
     {
-        $this->response->setRawHeader("HTTP/1.1 200 OK");
-        $this->response->setRawHeader("Content-Type: application/json");
-        $this->response->setRawHeader("Cache-Control: no-cache");
+        if ($param === '400') {
+            return ResponseUtil::setup400_BadRequest(new ErrorDto($param2, $param3), 'this is result');
+        }
+        if ($param === '403') {
+            return ResponseUtil::setup403_Forbidden();
+        }
+        if ($param === '500') {
+            return ResponseUtil::setup500_InternalServerError($param2 ?? '');
+        }
         $result = new class
         {
             public $foo = 'FOOOOOOOO!';
             public $bar = 'BARRRRRRR!';
         };
-        $jsonText = json_encode($result, JSON_HEX_TAG | JSON_HEX_AMP);
-        $this->response->setContentLength(strlen($jsonText));
-        return $this->response->setContent($jsonText);
+        return ResponseUtil::setup200_OK($result);
     }
 
     /**
