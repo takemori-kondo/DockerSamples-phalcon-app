@@ -42,6 +42,22 @@ services:
             bridge1:
                 ipv4_address: 172.16.0.10
 
+    mysql_common:
+        container_name: mysql_common
+        image: mysql:8.0.36
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mysql_common/volumes/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+            - ./docker/mysql_common/volumes/scripts:/scripts/
+        environment:
+            TZ: Asia/Tokyo
+            MYSQL_ROOT_PASSWORD: root
+            command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+        networks:
+            bridge1:
+                ipv4_address: 172.16.0.50
+
 networks:
     bridge1:
         driver: bridge
