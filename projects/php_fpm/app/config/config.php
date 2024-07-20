@@ -29,8 +29,10 @@ return new \Phalcon\Config\Config([
         'cacheDir'       => BASE_PATH . '/cache/',
         'baseUri'        => '/',
 
-        'utilsDir'           => APP_PATH . '/utils/',
-        'utilsValidatorsDir' => APP_PATH . '/utils/Validators/',
+        'utilsDir'         => APP_PATH . '/utils/',
+        'utilsDbDir'       => APP_PATH . '/utils/db/',
+        'utilsRequestDir'  => APP_PATH . '/utils/request/',
+        'utilsResponseDir' => APP_PATH . '/utils/response/',
         'timezone'       => 'Asia/Tokyo',
         'logLevel'       => 6, // 0-7. 3=Error, 4=Warning, 6=Informational, 7=Debug
     ]

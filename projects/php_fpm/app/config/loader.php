@@ -13,6 +13,8 @@ $loader->setDirectories(
         $config->application->modelsDir,
 
         $config->application->utilsDir,
-        $config->application->utilsValidatorsDir,
+        $config->application->utilsDbDir,
+        $config->application->utilsRequestDir,
+        $config->application->utilsResponseDir,
     ]
 )->register();
