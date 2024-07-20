@@ -52,6 +52,11 @@ class ZzzSampleController extends ControllerBase
             return ResponseUtil::setup200_OK($rows);
         }
 
+        if ($param === 'throw') {
+            $mixed = true ? 0 : "aaa";
+            strlen($mixed); // throw type error
+        }
+
         if ($param === '400') {
             return ResponseUtil::setup400_BadRequest(new ErrorDto($param2, $param3), 'this is result');
         }

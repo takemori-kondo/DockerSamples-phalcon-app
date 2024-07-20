@@ -35,5 +35,8 @@ return new \Phalcon\Config\Config([
         'utilsResponseDir' => APP_PATH . '/utils/response/',
         'timezone'       => 'Asia/Tokyo',
         'logLevel'       => 6, // 0-7. 3=Error, 4=Warning, 6=Informational, 7=Debug
+    ],
+    'debug' => [
+        'responsesDebugMessage' => true,
     ]
 ]);

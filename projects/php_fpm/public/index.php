@@ -2,6 +2,8 @@
 // PHP8.3
 declare(strict_types=1);
 
+use Phalcon\Db\Adapter\Pdo\AbstractPdo;
+use Phalcon\Di\Di;
 use Phalcon\Di\FactoryDefault;
 
 error_reporting(E_ALL);
@@ -47,7 +49,22 @@ try {
     $application = new \Phalcon\Mvc\Application($di);
 
     echo $application->handle($_SERVER['REQUEST_URI'])->getContent();
-} catch (\Exception $e) {
-    echo $e->getMessage() . '<br>';
-    echo '<pre>' . $e->getTraceAsString() . '</pre>';
+} catch (Throwable $ex) {
+    /** @var AbstractPdo */
+    $db = Di::getDefault()->get('db');
+    if ($db?->isUnderTransaction()) {
+        $db->rollback();
+    }
+    if ($ex instanceof AppDomainException) {
+        $msg = $ex->getMessage() . "\n";
+        LogUtil::info('AppDomainException| ' . $msg);
+        ResponseUtil::setup400_BadRequest(new ErrorDto($msg, (string)$ex->getCode()), $ex->result)->send();
+    } else {
+        $msg = '<pre>' . $ex->getMessage() . "\n" . $ex->getFile() . '(' . $ex->getLine() . ')' . "\n" . $ex->getTraceAsString() . "\n</pre>";
+        LogUtil::error('System Error| ' . $msg);
+        if (!$config->get('debug')->get('responsesDebugMessage')) {
+            $msg = '';
+        }
+        ResponseUtil::setup500_InternalServerError($msg)->send();
+    }
 }
