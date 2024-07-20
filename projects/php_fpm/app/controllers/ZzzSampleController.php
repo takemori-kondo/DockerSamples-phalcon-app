@@ -2,6 +2,9 @@
 // PHP8.3
 declare(strict_types=1);
 
+use Phalcon\Filter\Validation\Validator\Alnum;
+use Phalcon\Filter\Validation\Validator\Digit;
+use Phalcon\Filter\Validation\Validator\Regex;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model;
 
@@ -10,9 +13,12 @@ class ZzzSampleController extends ControllerBase
     public function ApiAction()
     {
         $requestArray = RequestUtil::logAndGetRequestParameters(__METHOD__);
-        $param = $requestArray['param'] ?? null; //   issetや??は言語構造なため、未設定でもWARNINGは出ない
-        $param2 = $requestArray['param2'] ?? null; // issetや??は言語構造なため、未設定でもWARNINGは出ない
-        $param3 = $requestArray['param3'] ?? null; // issetや??は言語構造なため、未設定でもWARNINGは出ない
+
+        // https://docs.phalcon.io/5.6/filter-validation/#validators
+        $v = new V($requestArray);
+        $param  = $v->validate('param',  [new Alnum()]);
+        $param2 = $v->validate('param2', [new Digit(['allowEmpty' => true])]);
+        $param3 = $v->validate('param3', [new Regex(['pattern' => V::REGEX_ALNUM_4_OPERATION, 'allowEmpty' => true])]);
         LogUtil::debug('this is debug');
         LogUtil::info('this is info');
         LogUtil::warn('this is warn');
