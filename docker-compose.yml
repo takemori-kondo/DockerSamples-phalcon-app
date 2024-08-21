@@ -52,6 +52,7 @@ services:
         ports:
             - 3306:3306
         volumes:
+            - db-store:/var/lib/mysql
             - ./docker/mysql_common/volumes/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
             - ./docker/mysql_common/volumes/scripts:/scripts/
         environment:
@@ -61,6 +62,9 @@ services:
         networks:
             bridge1:
                 ipv4_address: 172.16.0.50
+
+volumes:
+    db-store:
 
 networks:
     bridge1:
